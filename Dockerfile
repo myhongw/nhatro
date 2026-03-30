@@ -1,23 +1,17 @@
-FROM php:8.2-cli
+FROM php:8.4-cli
 
 WORKDIR /app
 
-# Cài thư viện cần thiết
 RUN apt-get update && apt-get install -y \
     git unzip curl libzip-dev zip \
-    && docker-php-ext-install pdo pdo_mysql
+    && docker-php-ext-install pdo pdo_mysql zip
 
-# Cài composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Copy source
 COPY . .
 
-# Cài Laravel
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --no-dev --optimize-autoloader --no-scripts
 
-# Fix quyền
 RUN chmod -R 777 storage bootstrap/cache
 
-# Chạy Laravel
-CMD php artisan serve --host=0.0.0.0 --port=8000
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
