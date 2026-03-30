@@ -1,16 +1,23 @@
-FROM php:8.4-fpm
+FROM php:8.2-cli
 
 WORKDIR /app
 
-COPY . .
-
+# Cài thư viện cần thiết
 RUN apt-get update && apt-get install -y \
-    git unzip curl
+    git unzip curl libzip-dev zip \
+    && docker-php-ext-install pdo pdo_mysql
 
-# cài composer
+# Cài composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# 🔥 QUAN TRỌNG
+# Copy source
+COPY . .
+
+# Cài Laravel
 RUN composer install --no-dev --optimize-autoloader
 
-CMD ["php-fpm"]
+# Fix quyền
+RUN chmod -R 777 storage bootstrap/cache
+
+# Chạy Laravel
+CMD php artisan serve --host=0.0.0.0 --port=8000
