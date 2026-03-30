@@ -29,5 +29,6 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         script: |
           cd ~/nhatro
-          docker-compose pull
-          docker-compose up -d --remove-orphans
+          docker compose down
+          docker compose pull
+          docker compose up -d --remove-orphans
