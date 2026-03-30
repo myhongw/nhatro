@@ -14,11 +14,5 @@ RUN composer install --no-dev --optimize-autoloader --no-scripts
 
 RUN chmod -R 777 storage bootstrap/cache
 
-# cài node
-RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
-    && apt-get install -y nodejs
-
-# build frontend
-RUN npm install && npm run build
 
 CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
