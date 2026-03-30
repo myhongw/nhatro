@@ -7,6 +7,11 @@ services:
     container_name: app1
     ports:
       - "8001:8000"
+    volumes:
+      - .:/app            # Mount code vào container
+      - ./storage:/app/storage  # Đảm bảo logs và cache được giữ
+      - ./public:/app/public    # Đảm bảo build Vite tồn tại
+      - .env:/app/.env          # Mount file .env từ host
     depends_on:
       - db
 
@@ -15,6 +20,11 @@ services:
     container_name: app2
     ports:
       - "8002:8000"
+    volumes:
+      - .:/app
+      - ./storage:/app/storage
+      - ./public:/app/public
+      - .env:/app/.env
     depends_on:
       - db
 
