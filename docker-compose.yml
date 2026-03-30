@@ -2,19 +2,21 @@ version: '3.8'
 
 services:
 
+  # Laravel App 1
   app1:
     image: myhong00/nhatro:latest
-    container_name: app1
+    container_name: app1b
     ports:
       - "8001:8000"
     volumes:
-      - .:/app            # Mount code vào container
-      - ./storage:/app/storage  # Đảm bảo logs và cache được giữ
-      - ./public:/app/public    # Đảm bảo build Vite tồn tại
-      - .env:/app/.env          # Mount file .env từ host
+      - .:/app                     # Code
+      - ./storage:/app/storage     # Logs, cache persist
+      - ./public/build:/app/public/build  # Vite build persist
+      - .env:/app/.env             # Env config
     depends_on:
       - db
 
+  # Laravel App 2
   app2:
     image: myhong00/nhatro:latest
     container_name: app2
@@ -23,11 +25,12 @@ services:
     volumes:
       - .:/app
       - ./storage:/app/storage
-      - ./public:/app/public
+      - ./public/build:/app/public/build
       - .env:/app/.env
     depends_on:
       - db
 
+  # Nginx reverse proxy
   web:
     image: nginx:latest
     container_name: nginx
@@ -39,6 +42,7 @@ services:
       - app1
       - app2
 
+  # MySQL Database
   db:
     image: mysql:8
     container_name: db
@@ -47,3 +51,8 @@ services:
       MYSQL_DATABASE: nhatro
     ports:
       - "3309:3306"
+    volumes:
+      - db_data:/var/lib/mysql  # Persist DB
+
+volumes:
+  db_data:
