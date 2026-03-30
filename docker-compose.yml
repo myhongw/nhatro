@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+
+  app1:
+    build: .
+    container_name: app1
+    ports:
+      - "8001:8000"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+
+  app2:
+    build: .
+    container_name: app2
+    ports:
+      - "8002:8000"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+
+  web:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "8000:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app1
+      - app2
+
+  db:
+    image: mysql:8
+    container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: nhatro
+    ports:
+      - "3309:3306"
