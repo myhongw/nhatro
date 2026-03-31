@@ -53,12 +53,12 @@
 
                 @guest
 
-                    <a href="{{ route('login') }}"
+                    <a href="{{ url('login') }}"
                        class="px-4 py-2 text-sm border border-gray-300 rounded-full hover:bg-gray-100 transition">
                         Login
                     </a>
 
-                    <a href="{{ route('register') }}"
+                    <a href="{{ url('register') }}"
                        class="px-4 py-2 bg-blue-500 text-white rounded-full text-sm hover:bg-blue-600 transition shadow">
                         Register
                     </a>
