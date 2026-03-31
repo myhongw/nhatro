@@ -12,7 +12,7 @@ services:
       - .:/app                     # Code
       - ./storage:/app/storage     # Logs/cache persist
       - ./public/build:/app/public/build  # Vite build persist
-      - .env:/app/.env             # Env config
+      - .env:/app/.env             
     depends_on:
       - db
 
