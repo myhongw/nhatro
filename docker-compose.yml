@@ -7,7 +7,7 @@ services:
     image: myhong00/nhatro:latest
     container_name: app1b
     expose:
-      - "8000"                 # chỉ expose nội bộ cho Nginx
+      - "8000"                 # chỉ expose nội bộ cho 
     volumes:
       - .:/app                     # Code
       - ./storage:/app/storage     # Logs/cache persist
