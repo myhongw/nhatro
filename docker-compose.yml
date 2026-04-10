@@ -10,7 +10,7 @@ services:
       - "8000"                 # 
     volumes:
       - .:/app                     # 
-      - ./storage:/app/storage     # Logs/cache persist
+      - ./storage:/app/storage     # Logs/cache 
       - ./public/build:/app/public/build  # Vite build persist
       - .env:/app/.env             
     depends_on:
