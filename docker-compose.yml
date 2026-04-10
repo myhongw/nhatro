@@ -5,9 +5,9 @@ services:
   # Laravel App 1
   app1:
     image: myhong00/nhatro:latest
-    container_name: app1b
+    container_name: app1
     expose:
-      - "8000"                 # chỉ e
+      - "8000"                 # 
     volumes:
       - .:/app                     # 
       - ./storage:/app/storage     # Logs/cache persist
