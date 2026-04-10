@@ -7,7 +7,7 @@ services:
     image: myhong00/nhatro:latest
     container_name: app1b
     expose:
-      - "8000"                 # chỉ expos
+      - "8000"                 # chỉ e
     volumes:
       - .:/app                     # 
       - ./storage:/app/storage     # Logs/cache persist
