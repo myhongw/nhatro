@@ -15,6 +15,14 @@ use App\Http\Controllers\AdminController;
 Route::get('/', [RoomController::class, 'index'])->name('home');
 Route::get('/rooms', [RoomController::class, 'index'])->name('rooms.index');
 
+Route::get('/test', function () {
+    return response()->json([
+        'message' => 'OK',
+        'server' => gethostname(),
+        'time' => now()->toDateTimeString(),
+    ]);
+});
+
 /*
 |--------------------------------------------------------------------------
 | USER
