@@ -13,15 +13,17 @@
         </a>
     </div>
 
-    <div class="bg-white shadow rounded-lg overflow-hidden">
-        <table class="w-full table-fixed">
+    <div class="bg-white shadow rounded-lg overflow-x-auto">
+        <table class="w-full table-auto">
 
             <thead class="bg-gray-100 text-gray-700">
                 <tr>
                     <th class="p-3 w-[220px]">Ảnh</th>
+                    <th class="w-[220px]">Ảnh chi tiết</th>
                     <th class="w-[180px]">Tên</th>
                     <th class="w-[120px]">Giá</th>
                     <th class="w-[200px]">Địa chỉ</th>
+                    <th class="w-[150px]">📞 SĐT</th>
                     <th>Mô tả</th>
                     <th class="w-[120px]">Hành động</th>
                 </tr>
@@ -29,13 +31,28 @@
 
             <tbody>
                 @foreach($rooms as $room)
-                <tr class="border-t hover:bg-gray-50 transition text-center">
+                <tr class="border-t hover:bg-gray-50 transition text-center align-center">
 
                     <!-- IMAGE -->
                     <td class="p-3">
                         <img 
                             src="{{ $room->image ? asset('storage/'.$room->image) : 'https://via.placeholder.com/200x100' }}"
                             class="w-[200px] h-[100px] object-cover rounded mx-auto">
+                    </td>
+
+                     <!-- DETAIL IMAGES -->
+                    <td class="p-3">
+                        @if($room->images->count())
+                            <div class="grid grid-cols-2 gap-1 justify-center">
+                                @foreach($room->images->take(4) as $img)
+                                    <img 
+                                        src="{{ asset('storage/'.$img->image) }}"
+                                        class="w-[90px] h-[60px] object-cover rounded border mx-auto">
+                                @endforeach
+                            </div>
+                        @else
+                            <span class="text-gray-400 text-sm">Không có</span>
+                        @endif
                     </td>
 
                     <!-- TITLE -->
@@ -49,8 +66,13 @@
                     </td>
 
                     <!-- ADDRESS -->
-                    <td class="text-gray-600">
+                    <td class="text-gray-600 text-sm">
                         {{ $room->address }}
+                    </td>
+
+                    <!-- PHONE -->
+                    <td class="text-blue-600 font-semibold">
+                        📞 {{ $room->phone ?? '---' }}
                     </td>
 
                     <!-- DESCRIPTION -->

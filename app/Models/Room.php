@@ -11,6 +11,12 @@ class Room extends Model
         'description',
         'price',
         'address',
-        'image'
+        'image',
+        'phone'
     ];
+
+    public function images()
+    {
+        return $this->hasMany(RoomImage::class);
+    }
 }

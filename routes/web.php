@@ -8,34 +8,26 @@ use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
-| PUBLIC (USER - AI CŨNG XEM ĐƯỢC)
+| PUBLIC
 |--------------------------------------------------------------------------
 */
-
-Route::get('/test', function () {
-    return gethostname();
-});
-
-// Trang chủ + danh sách phòng
 
 Route::get('/', [RoomController::class, 'index'])->name('home');
 Route::get('/rooms', [RoomController::class, 'index'])->name('rooms.index');
 
-
 /*
 |--------------------------------------------------------------------------
-| USER (PHẢI LOGIN)
+| USER
 |--------------------------------------------------------------------------
 */
 
 Route::middleware(['auth'])->group(function () {
 
-    // Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // CRUD phòng (KHÔNG có index)
+    // ĐẶT create/edit TRƯỚC
     Route::get('/rooms/create', [RoomController::class, 'create'])->name('rooms.create');
     Route::post('/rooms', [RoomController::class, 'store'])->name('rooms.store');
     Route::get('/rooms/{room}/edit', [RoomController::class, 'edit'])->name('rooms.edit');
@@ -43,31 +35,26 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/rooms/{room}', [RoomController::class, 'destroy'])->name('rooms.destroy');
 });
 
+/*
+|--------------------------------------------------------------------------
+| DETAIL ROOM
+|--------------------------------------------------------------------------
+| ĐỂ SAU create/edit
+*/
+
+Route::get('/rooms/{room}', [RoomController::class, 'show'])->name('rooms.show');
 
 /*
 |--------------------------------------------------------------------------
-| ADMIN (PHẢI LOGIN + ROLE ADMIN)
+| ADMIN
 |--------------------------------------------------------------------------
 */
 
 Route::prefix('admin')->middleware(['auth'])->group(function () {
-
-    // Dashboard
     Route::get('/', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-
-    // Users
     Route::get('/users', [UserController::class, 'index'])->name('admin.users.index');
     Route::post('/users/{user}/role', [UserController::class, 'updateRole'])->name('admin.users.updateRole');
-
-    // Quản lý phòng
     Route::get('/rooms', [RoomController::class, 'adminIndex'])->name('admin.rooms.index');
-   
 });
-
-/*
-|--------------------------------------------------------------------------
-| AUTH (LOGIN / REGISTER)
-|--------------------------------------------------------------------------
-*/
 
 require __DIR__.'/auth.php';
