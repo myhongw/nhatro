@@ -30,7 +30,6 @@ services:
     depends_on:
       - db
 
-  # Nginx reverse proxy
   web:
     image: nginx:latest
     container_name: nginx
