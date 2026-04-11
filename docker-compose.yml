@@ -7,11 +7,11 @@ services:
     image: myhong00/nhatro:latest
     container_name: app1
     expose:
-      - "8000"                 # 
+      - "8000"                 
     volumes:
-      - .:/app                     # 
-      - ./storage:/app/storage     # Logs/cache 
-      - ./public/build:/app/public/build  # Vite build persist
+      - .:/app                     
+      - ./storage:/app/storage     
+      - ./public/build:/app/public/build  
       - .env:/app/.env             
     depends_on:
       - db
