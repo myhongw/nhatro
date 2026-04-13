@@ -41,7 +41,7 @@ services:
       - app1
       - app2
 
-  
+  # MySQL Database
   db:
     image: mysql:8
     container_name: db
