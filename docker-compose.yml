@@ -30,6 +30,7 @@ services:
     depends_on:
       - db
 
+
   web:
     image: nginx:latest
     container_name: nginx
